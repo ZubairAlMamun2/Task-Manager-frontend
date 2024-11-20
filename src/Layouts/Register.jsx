@@ -125,11 +125,7 @@ const Register = () => {
               required
             />
             <span onClick={()=>setPasstype(!passtype)} className="absolute right-5 top-14 ">{passtype?<FaEyeSlash />:<FaEye />}</span>
-            <label className="label">
-              <a href="#" className="label-text-alt link link-hover">
-                Forgot password?
-              </a>
-            </label>
+           
           </div>
           <h2 className="text-red-500">{error&&error}</h2>
           <div className="form-control mt-6">

@@ -9,6 +9,7 @@ import {
   signOut,
   GoogleAuthProvider,
   updateProfile,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 
@@ -18,7 +19,7 @@ const provider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  
+  const[resetEmail,SetresetEmail]=useState("");
   const [loading, setLoading] = useState(true);
 //     console.log(user);
 
@@ -41,13 +42,17 @@ const AuthProvider = ({ children }) => {
     return updateProfile(auth.currentUser,updateddata);
   }
 
+  const ResetUserPassword=(Email)=>{
+    return sendPasswordResetEmail(auth,Email);
+  }
+
 //   const SignInWithGoogle=(auth,provider)=>{
 //     return signInWithPopup(auth, provider)
 //   }
 
   
 
-  const UserInfo = { user, setUser, createNewUser, Logout, Login, loading,UpdateUserProfile };
+  const UserInfo = { user, setUser, createNewUser, Logout, Login, loading,UpdateUserProfile,ResetUserPassword,SetresetEmail,resetEmail };
 //   const UserInfo = { user,createNewUser,setUser,Logout };
 
   useEffect(() => {

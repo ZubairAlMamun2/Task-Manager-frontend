@@ -16,10 +16,20 @@ const Login = () => {
   const [error, setError] = useState("");
   const [passtype, setPasstype] = useState(false);
   const auth = getAuth(app);
-  const { Login, setUser } = useContext(AuthContext);
+  const { Login, setUser,resetEmail,SetresetEmail } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   //   console.log(location)
+
+
+  const handleChange=(e)=>{
+    e.preventDefault()
+        const email=e.target.value
+        SetresetEmail(email)
+        console.log(resetEmail)
+  }
+
+
   const handlesubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -71,6 +81,8 @@ const Login = () => {
             <input
               name="email"
               type="email"
+              value={resetEmail}
+              onChange={handleChange}
               placeholder="email"
               className="input input-bordered"
               required
@@ -94,9 +106,9 @@ const Login = () => {
               {passtype ? <FaEyeSlash /> : <FaEye />}
             </span>
             <label className="label">
-              <a href="#" className="label-text-alt link link-hover">
+              <Link to="/resetpassword" className="label-text-alt link link-hover">
                 Forgot password?
-              </a>
+              </Link>
             </label>
           </div>
           <h2 className="text-red-500">{error && error}</h2>

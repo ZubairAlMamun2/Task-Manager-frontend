@@ -12,6 +12,7 @@ import Login from "../Layouts/Login";
 import Register from "../Layouts/Register";
 import PrivetRoute from "./Privetroute";
 import Update from "../Layouts/Update";
+import ResetPassword from "../Layouts/ResetPassword";
 
 
   const router = createBrowserRouter([
@@ -48,13 +49,17 @@ import Update from "../Layouts/Update";
         },
         {
             path: "/auth/update",
-            element: <Update />, 
+            element: <PrivetRoute><Update /></PrivetRoute>, 
         },
       ]
     },
     {
       path: "/dashboard",
       element: <PrivetRoute><Dashboard /></PrivetRoute>,
+    },
+    {
+      path: "/resetpassword",
+      element: <ResetPassword />,
     },
     {
       path: "*",

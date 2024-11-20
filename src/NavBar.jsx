@@ -5,7 +5,7 @@ import { FaUserCircle } from "react-icons/fa";
 
 const NavBar = () => {
     const {user,Logout}=useContext(AuthContext)
-    console.log(user)
+    // console.log(user)
   return (
     <div className="navbar bg-base-200 broder-none rounded-b-lg mb-5 mt-1">
       <div className="navbar-start">

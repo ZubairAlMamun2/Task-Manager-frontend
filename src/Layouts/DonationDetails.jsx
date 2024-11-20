@@ -6,7 +6,7 @@ const DonationDetails = () => {
     const data=useLoaderData();
     const dataType=typeof(data);
     const obj=data[0];
-    console.log(dataType)
+    // console.log(dataType)
   return (
     <div>
         {/* <h2>{`${data&&}`}</h2> */}

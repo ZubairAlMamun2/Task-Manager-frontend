@@ -11,7 +11,7 @@ const Donation = () => {
         then(res=>res.json()).
         then(data=>setCampains(data))
     },[])
-    console.log(campains)
+    // console.log(campains)
   return (
     <div className="w-11/12 mx-auto">
       <NavBar />

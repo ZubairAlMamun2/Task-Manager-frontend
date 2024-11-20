@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom'
 
 const DonationCard = ({card}) => {
     const location=useLocation();
-    console.log(location)
+    // console.log(location)
   return (
     <div className="card bg-base-100  shadow-xl col-span-1">
   <figure>

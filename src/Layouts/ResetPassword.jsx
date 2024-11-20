@@ -13,7 +13,8 @@ const ResetPassword = () => {
         e.preventDefault()
         const email=e.target.value
         SetresetEmail(email)
-        console.log(resetEmail)
+        // console.log(resetEmail)
+        
     }
     console.log(resetEmail)
 
@@ -30,6 +31,7 @@ const ResetPassword = () => {
         link.target = '_blank'; // Open in a new tab (remove this line if you want to open in the same tab)
         link.rel = 'noopener noreferrer'; // For security
         link.click();
+        navigate('/auth/login');
     }).catch((err)=>{
         console.log(err)
     })

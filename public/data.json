@@ -1,0 +1,57 @@
+[
+    {
+      "id": 1,
+      "title": "Warm Hearts, Warm Homes",
+      "image": "https://i.ibb.co.com/LtWzmdD/donate-1.png",
+      "description": "Providing blankets and heating equipment to families struggling in harsh winter conditions.",
+      "status": "Active",
+      "contactInfo": "+8801799999999",
+      "division": "Rajshahi"
+    },
+    {
+      "id": 2,
+      "title": "Winter Coats for Kids",
+      "image": "https://i.ibb.co.com/XxGW6KF/Donate-2.png",
+      "description": "Collecting and distributing winter coats to children in need to keep them warm.",
+      "status": "Active",
+      "contactInfo": "+8801788888888",
+      "division": "Rajshahi"
+    },
+    {
+      "id": 3,
+      "title": "Hot Meals for the Homeless",
+      "image": "https://i.ibb.co.com/XY116qZ/Donate-3.png",
+      "description": "Serving hot meals to homeless individuals during the cold winter months.",
+      "status": "Ongoing",
+      "contactInfo": "+8801777777777",
+      "division": "Rangpur"
+    },
+    {
+      "id": 4,
+      "title": "Winter Shelter Support",
+      "image": "https://i.ibb.co.com/LrbvQ59/Donate-4.png",
+      "description": "Building temporary winter shelters for families displaced due to natural disasters.",
+      "status": "Active",
+      "contactInfo": "+8801766666666",
+      "division": "Rangpur"
+    },
+    {
+      "id": 5,
+      "title": "Warmth for Refugees",
+      "image": "https://i.ibb.co.com/mhnPPLk/Donate-5.png",
+      "description": "Providing winter clothing and essentials to refugees in extreme cold regions.",
+      "status": "Active",
+      "contactInfo": "+8801755555555",
+      "division": "Khulna"
+    },
+    {
+      "id": 6,
+      "title": "Snow Boots and Socks Drive",
+      "image": "https://i.ibb.co.com/VLQqRhs/Donate-6.png",
+      "description": "Ensuring families have durable snow boots and thermal socks for the winter.",
+      "status": "Ongoing",
+      "contactInfo": "+8801744444444",
+      "division": "Khulna"
+    }
+  ]
+  

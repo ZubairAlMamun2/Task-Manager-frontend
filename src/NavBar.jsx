@@ -54,7 +54,7 @@ const NavBar = () => {
       </div>
       <div className="navbar-end">
         <span className="mr-2">{user&&user.photoURL?<span className="flex items-center" ><img className="w-10 h-10 border rounded-full" src={user.photoURL} alt="" /></span>:""}</span>
-        {user?<button onClick={Logout} className='btn btn-primary text-base-100 px-3 py-1'>Log Out</button>:<Link to="/auth/login" className='btn btn-primary text-base-100 px-3 py-1'>Login</Link>}
+        {user?<button onClick={Logout} className='btn btn-primary text-base-100 px-3 py-1'>Log Out</button>:<Link to="/auth/login" className='btn btn-primary text-base-100 px-3 py-1 '>Login</Link>}
       </div>
     </div>
   );

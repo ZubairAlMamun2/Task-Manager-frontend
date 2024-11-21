@@ -1,8 +1,17 @@
-# React + Vite
+# Winter Cloth Donation (https://donate-for-people-1.netlify.app/)
+ 
+## Purpose 
+- In winter season many of rural or low income peoples are faceing problem of cloth, they don't have anough money to buy good cloth that they can protect the winter.. So, we created a app to help these people.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+##  NPM packages
 
-Currently, two official plugins are available:
+- react toastify
+- Animate.css
+- etc..
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## key features
+-In this project we use firebase to authentacet user
+-Hosting the project in Netlify
+-In this project Only donate LogedIn users
+-We also use useContext Api
+-etc..

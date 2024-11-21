@@ -5,7 +5,7 @@ const ExtraSection = () => {
     <div className='grid grid-cols-2  border-none rounded-lg  gap-5'>
         {/* why you donate section */}
         <div className='col-span-2 md:col-span-2 bg-base-200 mt-5 p-5 card shadow-lg'>
-            <h2 className='text-xl font-semibold text-center mb-2'>Photo Gallary</h2>
+            <h2 className='text-xl font-semibold text-center mb-2 animate__animated animate__bounce'>Photo Gallary</h2>
             <div className='grid gap-5 grid-cols-4'>
                 <img className='w-full md:h-[50vh] border rounded-lg shadow-lg col-span-4 md:col-span-2' src="https://i.ibb.co.com/X4jrMZm/dd-4.png" alt="" />
                 <img className='w-full md:h-[50vh] border rounded-lg shadow-lg col-span-4 md:col-span-2 ' src="https://i.ibb.co.com/XZPdkD7/dd-3.png" alt="" />

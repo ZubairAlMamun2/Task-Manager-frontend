@@ -41,6 +41,7 @@ const Footer = () => {
           </form>
         </div>
       </footer>
+      <p className="text-center mt-2 font-semibold">Copyright © {new Date().getFullYear()} - All right reserved</p>
     </div>
   );
 };

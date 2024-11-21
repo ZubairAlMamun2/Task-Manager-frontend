@@ -3,6 +3,8 @@ import NavBar from '../NavBar'
 import Banner from '../components/Banner'
 import About from '../components/About'
 import Footer from '../Footer'
+import Works from '../components/Works'
+import ExtraSection from '../components/ExtraSection'
 
 
 const HomeLayout = () => {
@@ -11,6 +13,8 @@ const HomeLayout = () => {
         <NavBar />
         <Banner />
         <About />
+        <Works />
+        <ExtraSection />
         <Footer />
     </div>
   )

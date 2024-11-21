@@ -64,7 +64,7 @@ const DeatailsCard = ({ data }) => {
                   <span className="label-text">Quantity of items</span>
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   name="quantity"
                   placeholder="2 jackets, 3 blankets"
                   className="input input-bordered"

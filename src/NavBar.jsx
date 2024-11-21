@@ -59,4 +59,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-{/* <FaUserCircle className="text-5xl" /> */}

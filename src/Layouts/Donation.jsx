@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../NavBar";
 import DonationCard from "./DonationCard";
+import Footer from "../Footer";
 
 
 
@@ -21,6 +22,7 @@ const Donation = () => {
             return <DonationCard key={campain.id} card={campain} />
         })}
       </div>
+      <Footer />
     </div>
   );
 };

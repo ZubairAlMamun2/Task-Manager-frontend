@@ -1,11 +1,17 @@
 import React from 'react'
 import NavBar from '../NavBar'
+import Footer from '../Footer'
 
 const Help = () => {
   return (
-    <div className='w-11/12 mx-auto'>
+    <div className='w-11/12 mx-auto '>
         <NavBar />
-        Help</div>
+        <div className='min-h-[60vh]'>
+
+        </div>
+        <Footer />
+        </div>
+
   )
 }
 

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Dashboard = () => {
     const{user}=useContext(AuthContext)
-    console.log(user.photoURL)
+    // console.log(user.photoURL)
   return (
     <div className="w-11/12 mx-auto">
       <NavBar />

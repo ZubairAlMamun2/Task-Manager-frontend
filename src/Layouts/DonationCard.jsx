@@ -5,7 +5,7 @@ const DonationCard = ({card}) => {
     const location=useLocation();
     // console.log(location)
   return (
-    <div className="card bg-base-100  shadow-xl col-span-1">
+    <div className="card bg-base-100  shadow-xl col-span-6 md:col-span-3 lg:col-span-2">
   <figure>
     <img className='h-[40vh] w-[70vh]'
       src={card.image}

@@ -16,7 +16,7 @@ const ResetPassword = () => {
         // console.log(resetEmail)
         
     }
-    console.log(resetEmail)
+    // console.log(resetEmail)
 
 
   const handlesubmit = (e) => {
@@ -33,7 +33,7 @@ const ResetPassword = () => {
         link.click();
         navigate('/auth/login');
     }).catch((err)=>{
-        console.log(err)
+        // console.log(err)
     })
   };
   return (

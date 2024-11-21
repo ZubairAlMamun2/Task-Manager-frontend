@@ -26,7 +26,7 @@ const Login = () => {
     e.preventDefault()
         const email=e.target.value
         SetresetEmail(email)
-        console.log(resetEmail)
+        // console.log(resetEmail)
   }
 
 
@@ -37,7 +37,7 @@ const Login = () => {
     const password = form.password.value;
     Login(email, password)
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
         setUser(result.user);
         setError("");
         navigate(location?.state ? location.state : "/");
@@ -45,7 +45,7 @@ const Login = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+        // console.log(errorCode, errorMessage);
         setError(errorCode, errorMessage);
         e.target.reset();
       });
@@ -57,13 +57,13 @@ const Login = () => {
   const SignInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then((res) => {
-        console.log(res.user);
+        // console.log(res.user);
         setUser(res.user);
         setError("");
         navigate(location?.state ? location.state : "/");
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         setError(err.message);
       });
   };

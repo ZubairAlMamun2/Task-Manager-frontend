@@ -16,7 +16,7 @@ const Donation = () => {
     <div className="w-11/12 mx-auto">
       <NavBar />
       <h2 className="text-2xl font-bold text-center bg-base-200 py-5 mb-2">Our Donation Campaigns</h2>
-      <div className="grid gap-3 grid-cols-3">
+      <div className="grid gap-3 grid-cols-6">
         {campains.map((campain)=>{
             return <DonationCard key={campain.id} card={campain} />
         })}

@@ -36,7 +36,7 @@ const Register = () => {
     createNewUser(email, password)
       .then((result) => {
         setUser(result.user);
-        console.log(result.user)
+        // console.log(result.user)
         setError("")
         
         UpdateUserProfile({displayName:name,photoURL:photo}).
@@ -47,24 +47,24 @@ const Register = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode,errorMessage)
+        // console.log(errorCode,errorMessage)
         setError(errorMessage)
         e.target.reset();
       });
 
-    console.log({ name, photo, email, password });
+    // console.log({ name, photo, email, password });
   };
 
   const SignInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then((res) => {
-        console.log(res.user);
+        // console.log(res.user);
         setUser(res.user);
         setError("");
         navigate(location?.state ? location.state : "/");
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         setError(err.message);
       });
   };

@@ -10,8 +10,8 @@
 - etc..
 
 ## key features
--In this project we use firebase to authentacet user
--Hosting the project in Netlify
--In this project Only donate LogedIn users
--We also use useContext Api
--etc..
+- In this project we use firebase to authentacet user
+- Hosting the project in Netlify
+- In this project Only donate LogedIn users
+- We also use useContext Api
+- etc..

@@ -1,20 +1,20 @@
-import React from 'react'
-import NavBar from '../NavBar'
-import Banner from '../components/Banner'
-import About from '../components/About'
-import Footer from '../Footer'
-import Works from '../components/Works'
-import ExtraSection from '../components/ExtraSection'
-
+import { useContext } from "react"
+import AllTask from "../components/AllTask"
+import Footer from "../components/Footer"
+import NavBar from "../components/NavBar"
+import { AuthContext } from "../provider/AuthProvider"
+import SetStart from "../components/SetStart"
 
 const HomeLayout = () => {
+  const{user}=useContext(AuthContext)
   return (
-    <div className='w-11/12 mx-auto'>
+    <div>
         <NavBar />
-        <Banner />
-        <About />
-        <Works />
-        <ExtraSection />
+        <main className="min-h-screen">
+        {
+          user?(<AllTask />):(<><SetStart /></>)
+        }
+        </main>
         <Footer />
     </div>
   )

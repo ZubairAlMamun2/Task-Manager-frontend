@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:5000");
+const socket = io("https://todo-app-back-nine.vercel.app");
 
 const AllTask = () => {
   const { user } = useContext(AuthContext);
@@ -19,7 +19,7 @@ const AllTask = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/alltask");
+        const response = await axios.get("https://todo-app-back-nine.vercel.app/alltask");
         const fetchedTasks = response.data;
 
         setTasks(fetchedTasks);
@@ -43,7 +43,9 @@ const AllTask = () => {
       setTasks((prev) =>
         prev.map((task) => (task._id === updatedTask._id ? updatedTask : task))
       );
-      categorizeTasks(tasks.map((task) => (task._id === updatedTask._id ? updatedTask : task)));
+      categorizeTasks(
+        tasks.map((task) => (task._id === updatedTask._id ? updatedTask : task))
+      );
     });
 
     socket.on("taskDeleted", (taskId) => {
@@ -61,7 +63,9 @@ const AllTask = () => {
   // Categorize tasks
   const categorizeTasks = (taskList) => {
     setTodoTasks(taskList.filter((task) => task.category === "To-Do"));
-    setInProgressTasks(taskList.filter((task) => task.category === "In Progress"));
+    setInProgressTasks(
+      taskList.filter((task) => task.category === "In Progress")
+    );
     setDoneTasks(taskList.filter((task) => task.category === "Done"));
   };
 
@@ -82,9 +86,12 @@ const AllTask = () => {
       );
 
       // Update backend
-      await axios.put(`http://localhost:5000/taskscategoryupdate/${draggedTask._id}`, {
-        category: newCategory,
-      });
+      await axios.put(
+        `https://todo-app-back-nine.vercel.app/taskscategoryupdate/${draggedTask._id}`,
+        {
+          category: newCategory,
+        }
+      );
 
       // Update local state
       setTasks(updatedTasks);
@@ -118,7 +125,9 @@ const AllTask = () => {
 
     if (formValues) {
       try {
-        await axios.put(`http://localhost:5000/updatedetailstasks/${id}`, { titleDesc: formValues });
+        await axios.put(`https://todo-app-back-nine.vercel.app/updatedetailstasks/${id}`, {
+          titleDesc: formValues,
+        });
         const updatedTasks = tasks.map((task) =>
           task._id === id ? { ...task, titleDesc: formValues } : task
         );
@@ -142,7 +151,7 @@ const AllTask = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:5000/tasks/${id}`);
+          await axios.delete(`https://todo-app-back-nine.vercel.app/tasks/${id}`);
           const updatedTasks = tasks.filter((task) => task._id !== id);
           setTasks(updatedTasks);
           categorizeTasks(updatedTasks);
@@ -156,20 +165,28 @@ const AllTask = () => {
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">Task Management</h1>
+      <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">
+        Task Management
+      </h1>
 
       {loading ? (
         <p className="text-center text-lg text-gray-500">Loading tasks...</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[{ name: "To-Do", tasks: todoTasks }, { name: "In Progress", tasks: inProgressTasks }, { name: "Done", tasks: doneTasks }].map(({ name, tasks }) => (
+          {[
+            { name: "To-Do", tasks: todoTasks },
+            { name: "In Progress", tasks: inProgressTasks },
+            { name: "Done", tasks: doneTasks },
+          ].map(({ name, tasks }) => (
             <div
               key={name}
               className="bg-gray-100 p-4 rounded-lg min-h-[200px] transition-all hover:shadow-lg"
               onDragOver={(e) => e.preventDefault()}
               onDrop={(e) => handleDrop(e, name)}
             >
-              <h2 className="text-xl font-bold mb-3 text-center text-purple-600">{name}</h2>
+              <h2 className="text-xl font-bold mb-3 text-center text-purple-600">
+                {name}
+              </h2>
               {tasks.map((task) => (
                 <div
                   key={task._id}
@@ -177,8 +194,12 @@ const AllTask = () => {
                   draggable
                   onDragStart={(e) => handleDragStart(e, task)}
                 >
-                  <p className="font-semibold text-lg">{task.titleDesc?.title}</p>
-                  <p className="text-sm text-gray-600">{task.titleDesc?.description}</p>
+                  <p className="font-semibold text-lg">
+                    {task.titleDesc?.title}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {task.titleDesc?.description}
+                  </p>
                   <div className="md:flex justify-between mt-3">
                     <button
                       onClick={() => handleUpdateDetails(task._id)}

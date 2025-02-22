@@ -2,9 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { io } from "socket.io-client";
-
-const socket = io("https://todo-app-back-nine.vercel.app");
 
 const AllTask = () => {
   const { user } = useContext(AuthContext);
@@ -14,60 +11,45 @@ const AllTask = () => {
   const [doneTasks, setDoneTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [draggedTask, setDraggedTask] = useState(null);
+  console.log(todoTasks);
 
-  // Fetch tasks and categorize them
+  // Function to fetch tasks from the backend (via long polling)
+  const fetchTasks = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/pollForUpdates");
+      const fetchedTasks = response.data;
+
+      setTasks(fetchedTasks);
+      categorizeTasks(fetchedTasks);
+    } catch (error) {
+      console.error("Error fetching tasks:", error.response?.data || error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch tasks initially and then every 5 seconds using long polling
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await axios.get("https://todo-app-back-nine.vercel.app/alltask");
-        const fetchedTasks = response.data;
+    const interval = setInterval(fetchTasks, 5000); // Poll every 5 seconds
 
-        setTasks(fetchedTasks);
-        categorizeTasks(fetchedTasks);
-      } catch (error) {
-        console.error("Error fetching tasks:", error.response?.data || error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
+    // Fetch tasks initially
     fetchTasks();
 
-    // Real-time updates
-    socket.on("taskAdded", (newTask) => {
-      setTasks((prev) => [...prev, newTask]);
-      categorizeTasks([...tasks, newTask]);
-    });
-
-    socket.on("taskUpdated", (updatedTask) => {
-      setTasks((prev) =>
-        prev.map((task) => (task._id === updatedTask._id ? updatedTask : task))
-      );
-      categorizeTasks(
-        tasks.map((task) => (task._id === updatedTask._id ? updatedTask : task))
-      );
-    });
-
-    socket.on("taskDeleted", (taskId) => {
-      setTasks((prev) => prev.filter((task) => task._id !== taskId));
-      categorizeTasks(tasks.filter((task) => task._id !== taskId));
-    });
-
-    return () => {
-      socket.off("taskAdded");
-      socket.off("taskUpdated");
-      socket.off("taskDeleted");
-    };
+    // Cleanup on component unmount
+    return () => clearInterval(interval);
   }, []);
 
-  // Categorize tasks
+  // Categorize tasks into their respective categories
   const categorizeTasks = (taskList) => {
-    setTodoTasks(taskList.filter((task) => task.category === "To-Do"));
-    setInProgressTasks(
-      taskList.filter((task) => task.category === "In Progress")
-    );
-    setDoneTasks(taskList.filter((task) => task.category === "Done"));
+    // Sort tasks by position first
+    const sortedTasks = [...taskList].sort((a, b) => a.position - b.position);
+  
+    // Categorize tasks based on their category and position
+    setTodoTasks(sortedTasks.filter((task) => task.category === "To-Do"));
+    setInProgressTasks(sortedTasks.filter((task) => task.category === "In Progress"));
+    setDoneTasks(sortedTasks.filter((task) => task.category === "Done"));
   };
+  
 
   // Drag-and-Drop Handlers
   const handleDragStart = (e, task) => {
@@ -86,12 +68,9 @@ const AllTask = () => {
       );
 
       // Update backend
-      await axios.put(
-        `https://todo-app-back-nine.vercel.app/taskscategoryupdate/${draggedTask._id}`,
-        {
-          category: newCategory,
-        }
-      );
+      await axios.put(`http://localhost:5000/taskscategoryupdate/${draggedTask._id}`, {
+        category: newCategory,
+      });
 
       // Update local state
       setTasks(updatedTasks);
@@ -125,9 +104,7 @@ const AllTask = () => {
 
     if (formValues) {
       try {
-        await axios.put(`https://todo-app-back-nine.vercel.app/updatedetailstasks/${id}`, {
-          titleDesc: formValues,
-        });
+        await axios.put(`http://localhost:5000/updatedetailstasks/${id}`, { titleDesc: formValues });
         const updatedTasks = tasks.map((task) =>
           task._id === id ? { ...task, titleDesc: formValues } : task
         );
@@ -151,7 +128,7 @@ const AllTask = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`https://todo-app-back-nine.vercel.app/tasks/${id}`);
+          await axios.delete(`http://localhost:5000/tasks/${id}`);
           const updatedTasks = tasks.filter((task) => task._id !== id);
           setTasks(updatedTasks);
           categorizeTasks(updatedTasks);
@@ -163,43 +140,61 @@ const AllTask = () => {
     });
   };
 
+  // Reorder tasks within each category
+  const handleReorder = async (updatedTasks) => {
+    try {
+        const response = await fetch("http://localhost:5000/updateTaskOrder", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ tasks: updatedTasks }),
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to update task order");
+        }
+
+        const data = await response.json();
+        console.log("Reorder response:", data);
+        
+        // Manually update state after successful reordering
+        setTasks(updatedTasks);
+    } catch (error) {
+        console.error("Error reordering tasks:", error);
+    }
+};
+
+  
+  
+  
+
   return (
     <div className="container mx-auto">
-      <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">
-        Task Management
-      </h1>
+      <h1 className="text-3xl font-bold text-center mb-6 text-blue-600">Task Management</h1>
 
       {loading ? (
         <p className="text-center text-lg text-gray-500">Loading tasks...</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[
-            { name: "To-Do", tasks: todoTasks },
-            { name: "In Progress", tasks: inProgressTasks },
-            { name: "Done", tasks: doneTasks },
-          ].map(({ name, tasks }) => (
+          {[{ name: "To-Do", tasks: todoTasks }, { name: "In Progress", tasks: inProgressTasks }, { name: "Done", tasks: doneTasks }].map(({ name, tasks }) => (
             <div
               key={name}
               className="bg-gray-100 p-4 rounded-lg min-h-[200px] transition-all hover:shadow-lg"
               onDragOver={(e) => e.preventDefault()}
               onDrop={(e) => handleDrop(e, name)}
             >
-              <h2 className="text-xl font-bold mb-3 text-center text-purple-600">
-                {name}
-              </h2>
+              <h2 className="text-xl font-bold mb-3 text-center text-purple-600">{name}</h2>
               {tasks.map((task) => (
                 <div
                   key={task._id}
                   className="bg-white p-4 mb-4 shadow-md rounded-lg hover:scale-105 transition-all"
                   draggable
                   onDragStart={(e) => handleDragStart(e, task)}
+                  onDrop={(e) => handleReorder(e, task, name)}
                 >
-                  <p className="font-semibold text-lg">
-                    {task.titleDesc?.title}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    {task.titleDesc?.description}
-                  </p>
+                  <p className="font-semibold text-lg">{task.titleDesc?.title}</p>
+                  <p className="text-sm text-gray-600">{task.titleDesc?.description}</p>
                   <div className="md:flex justify-between mt-3">
                     <button
                       onClick={() => handleUpdateDetails(task._id)}

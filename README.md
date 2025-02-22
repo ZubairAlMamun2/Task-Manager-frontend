@@ -1,17 +1,30 @@
-# Winter Cloth Donation (https://donate-for-people-1.netlify.app/)
- 
-## Purpose 
-- In winter season many of rural or low income peoples are faceing problem of cloth, they don't have anough money to buy good cloth that they can protect the winter.. So, we created a app to help these people.
+# Task Management App
 
-##  NPM packages
+## Short Description
+This is a task management web application built with React. The app allows users to view, update, delete, and categorize tasks into different sections: To-Do, In Progress, and Done. Tasks can be reordered through drag-and-drop functionality. The app communicates with a backend API for data persistence and updates.
 
-- react toastify
-- Animate.css
-- etc..
+## Live Links
+- [Live Demo](http://your-live-link-here.com) *(replace with your actual live demo link)*
 
-## key features
-- In this project we use firebase to authentacet user
-- Hosting the project in Netlify
-- In this project Only donate LogedIn users
-- We also use useContext Api
-- etc..
+## Dependencies
+- **React**: A JavaScript library for building user interfaces.
+- **Axios**: Promise-based HTTP client for the browser and Node.js.
+- **SweetAlert2**: A beautiful, responsive, customizable replacement for JavaScript's popup boxes.
+- **Tailwind CSS**: A utility-first CSS framework used for styling.
+- **React Context API**: For managing global state (authentication, etc.).
+
+## Installation Steps
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/your-username/your-repository-name.git
+   cd your-repository-name
+   npm install
+   npm start
+
+## Technologies Used
+- **Frontend:** React, Tailwind CSS
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
+- **Authentication:** Firebase
+- **Hosting:** Netlify
+- **Additional Libraries:** react-sweetalert2, react-icons, axios

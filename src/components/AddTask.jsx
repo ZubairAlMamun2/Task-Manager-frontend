@@ -7,94 +7,59 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const AddTask = () => {
+  const [count, setCount] = useState(0);
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/alltask");
+        setCount(response.data.length-1); // Get the total count for ordering
+      } catch (error) {
+        console.error("Error fetching tasks:", error.response?.data || error);
+      }
+    };
 
-    const[count,setCount]=useState(0)
-    useEffect(()=>{
-        const fetchTasks = async () => {
-            try {
-              const response = await axios.get("http://localhost:5000/alltask");
-              const fetchedTasks = response.data;
-              setCount(fetchedTasks.length)
-            } catch (error) {
-              console.error("Error fetching tasks:", error.response?.data || error);
-            }
-          };
-      
-          fetchTasks();
-    },[])
-    
+    fetchTasks();
+  }, []);
 
-
-    const { user } = useContext(AuthContext);
-    const navigate=useNavigate()
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const form = new FormData(e.target);
     const title = form.get("title").trim();
-    const email = user.email;
     const description = form.get("description").trim();
-    const titleDesc={title,description}
+    const email = user.email;
+    const titleDesc = { title, description };
     const timestamp = new Date().toISOString();
     const category = "To-Do";
-    const possition = count+1;
+    const position = count + 1; // Assigning order based on count
 
     if (title.length > 50) {
-      Swal.fire({
-        title: "Error!",
-        text: "Title cannot exceed 50 characters.",
-        icon: "error",
-        confirmButtonText: "Okay",
-      });
+      Swal.fire("Error!", "Title cannot exceed 50 characters.", "error");
       return;
     }
 
     if (description.length > 200) {
-      Swal.fire({
-        title: "Error!",
-        text: "Description cannot exceed 200 characters.",
-        icon: "error",
-        confirmButtonText: "Okay",
-      });
+      Swal.fire("Error!", "Description cannot exceed 200 characters.", "error");
       return;
     }
 
-    const formData = {
-      titleDesc,
-      timestamp,
-      category,
-      email,
-      possition
-    };
+    const formData = { titleDesc, timestamp, category, email, position };
 
-    fetch(`http://localhost:5000/addnewtask`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.acknowledged) {
-          Swal.fire({
-            title: "Success!",
-            text: "Task added successfully",
-            icon: "success",
-            confirmButtonText: "Cool",
-          });
-          navigate('/')
-        }
-      })
-      .catch((err) => {
-        Swal.fire({
-          title: "Error!",
-          text: "Something went wrong!",
-          icon: "error",
-          confirmButtonText: "Okay",
-        });
-      });
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/addnewtask",
+        formData
+      );
+      if (res.data.acknowledged) {
+        Swal.fire("Success!", "Task added successfully", "success");
+        navigate("/");
+      }
+    } catch (err) {
+      Swal.fire("Error!", "Something went wrong!", "error");
+    }
 
     e.target.reset();
   };
@@ -139,7 +104,6 @@ const AddTask = () => {
                 maxLength="200"
               ></textarea>
             </div>
-
 
             {/* Submit Button */}
             <div className="form-control mt-6">
